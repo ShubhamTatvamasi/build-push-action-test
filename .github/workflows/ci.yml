@@ -36,8 +36,9 @@ jobs:
 
       - name: Docker Hub Description
         uses: peter-evans/dockerhub-description@v2
-        run: ls
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           repository: ${{ steps.string.outputs.lowercase }}
+
+      - run: ls
