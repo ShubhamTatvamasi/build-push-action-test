@@ -25,12 +25,6 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: ${{ steps.string.outputs.lowercase }}
-          tags: |
-            latest
-            type=schedule
-            type=ref,event=branch
-            type=ref,event=tag
-            type=ref,event=pr
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
