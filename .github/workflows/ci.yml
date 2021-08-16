@@ -33,3 +33,10 @@ jobs:
         with:
           push: true
           tags: ${{ steps.string.outputs.lowercase }}
+
+      - name: Docker Hub Description
+        uses: peter-evans/dockerhub-description@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: ${{ steps.string.outputs.lowercase }}
