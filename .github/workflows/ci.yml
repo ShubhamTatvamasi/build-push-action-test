@@ -34,6 +34,9 @@ jobs:
           push: true
           tags: ${{ steps.string.outputs.lowercase }}
 
+      - name: List all files
+        run: ls
+
       - name: Docker Hub Description
         uses: peter-evans/dockerhub-description@v2
         with:
@@ -41,4 +44,3 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           repository: ${{ steps.string.outputs.lowercase }}
 
-      - run: ls
