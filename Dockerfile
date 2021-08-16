@@ -1,3 +1,3 @@
-FROM busybox:sakjdhkjadhakj
+FROM busybox
 
 RUN echo "Hello World"
