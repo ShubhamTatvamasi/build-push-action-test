@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - 'master'
+    tags:
+      - '*'
 
 jobs:
   docker:
@@ -11,6 +13,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Change String Case
+        id: string
+        uses: ASzc/change-string-case-action@v1
+        with:
+          string: ${{ github.repository }}
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ steps.string.outputs.lowercase }}
+          tags: |
+            type=raw
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -24,18 +40,13 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Change String Case
-        id: string
-        uses: ASzc/change-string-case-action@v1
-        with:
-          string: ${{ github.repository }}
-
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ${{ steps.string.outputs.lowercase }}
+          tags: ${{ steps.meta.outputs.tags }}
+          # tags: ${{ steps.string.outputs.lowercase }}
 
       - name: Docker Hub Description
         uses: peter-evans/dockerhub-description@v2
@@ -43,3 +54,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           repository: ${{ steps.string.outputs.lowercase }}
+
+
+
+
