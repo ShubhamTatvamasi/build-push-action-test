@@ -1,3 +1,3 @@
-FROM busybox:lksajdlkajsdlka
+FROM busybox
 
 RUN echo "Hello World"
